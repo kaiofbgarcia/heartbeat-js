@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heartbeat - Baby Monitor</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Heartbeat - Baby Monitor</h1>
+      <p class="subtitle">Veja como está o seu bebê</p>
+      <!-- WEBCAM -->
+      <div class="webcam-container">
+        <video
+          hidden
+          class="webcam-video"
+          id="webcam"
+          width="640"
+          height="480"
+        ></video>
+        <canvas id="canvas" width="640" height="480"></canvas>
+      </div>
+      <!-- HeartBeat -->
+      <div class="heartbeat-container">
+        <h2 class="subtitle">Batimentos Cardíacos</h2>
+        <div class="heartbeat">
+          <p class="heartbeat-value" id="bpmDisplay">BPM: </p>
+          <!-- <div class="heartbeat-unit">bpm</div> -->
+        </div>
+      <!-- BUTTONS -->
+      <div class="button-container">
+        <button id="dicas" class="button bg-blue-500 hover:bg-blue-700">
+          Dicas de Cuidado
+        </button>
+        <button id="notificacao" class="button bg-blue-500 hover:bg-blue-700">
+          Ver Histórico de Notificação
+        </button>
+      </div>
+      <script type="module" src="index.js"></script>
+    </div>
+  </body>
+</html>
