@@ -1,18 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Heartbeat</title>
-</head>
-<body>
-  <h1>Heartbeat demo</h1>
-  </br>
-  <p>This demo runs a simple variant of rPPG directly in your browser to measure your heart rate based on subtle changes in skin color.</p>
-  <p>For best results, try in a constantly well lit space with minimal device and subject motion.</p>
-  </br>
-  <div>
-    <video hidden id="webcam" width="640" height="480"></video>
-    <canvas id="canvas" width="640" height="480"></canvas>
-  </div>
-  <script type="module" src="index.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heartbeat - Baby Monitor</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Heartbeat - Baby Monitor</h1>
+      <p class="subtitle">Veja como está o seu bebê</p>
+      <!-- WEBCAM -->
+      <div class="webcam-container">
+        <video
+          hidden
+          class="webcam-video"
+          id="webcam"
+          width="640"
+          height="480"
+        ></video>
+        <canvas id="canvas" width="640" height="480"></canvas>
+      </div>
+      <!-- HeartBeat -->
+      <div class="heartbeat-container">
+        <h2 class="subtitle">Batimentos Cardíacos</h2>
+        <div class="heartbeat">
+          <p class="heartbeat-value" id="bpmDisplay">BPM: </p>
+          <!-- <div class="heartbeat-unit">bpm</div> -->
+        </div>
+      <!-- BUTTONS -->
+      <div class="button-container">
+        <button id="dicas" class="button bg-blue-500 hover:bg-blue-700">
+          Dicas de Cuidado
+        </button>
+        <button id="notificacao" class="button bg-blue-500 hover:bg-blue-700">
+          Ver Histórico de Notificação
+        </button>
+      </div>
+      <script type="module" src="index.js"></script>
+    </div>
+  </body>
+</html>
