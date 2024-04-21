@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="title">Heartbeat - Baby Monitor</h1>
+      <h1 class="title">Baby Monitor</h1>
       <p class="subtitle">Veja como está o seu bebê</p>
       <!-- WEBCAM -->
       <div class="webcam-container">
@@ -26,22 +26,26 @@
         <canvas id="canvas" width="640" height="480"></canvas>
       </div>
       <!-- HeartBeat -->
+      <h2 class="subtitle">Batimentos Cardíacos</h2>
       <div class="heartbeat-container">
-        <h2 class="subtitle">Batimentos Cardíacos</h2>
         <div class="heartbeat">
-          <p class="heartbeat-value" id="bpmDisplay">BPM: </p>
-          <!-- <div class="heartbeat-unit">bpm</div> -->
+          <div class="heartbeat-value" id="heartbeat-value">0</div>
+          <div class="heartbeat-unit">bpm</div>
         </div>
+      </div>
       <!-- BUTTONS -->
       <div class="button-container">
-        <button id="dicas" class="button bg-blue-500 hover:bg-blue-700">
-          Dicas de Cuidado
-        </button>
+        <a href="cuidados.html">
+          <button id="dicas" class="button bg-blue-500 hover:bg-blue-700">
+            Dicas de Cuidado
+          </button>
+        </a>
         <button id="notificacao" class="button bg-blue-500 hover:bg-blue-700">
           Ver Histórico de Notificação
         </button>
       </div>
       <script type="module" src="index.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </div>
   </body>
 </html>
