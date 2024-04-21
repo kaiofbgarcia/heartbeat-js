@@ -410,13 +410,13 @@ export class Heartbeat {
         let bpm = ((result.maxLoc.y * fps) / signal.rows) * SEC_PER_MIN;
         console.log(bpm);
         //Verificação se o batimento está fora do intervalo normal
-        if (bpm < -100 ) {
+        if (bpm < - LOW_BPM ) {
           Swal.fire({
             icon: "error",
             title: "Batimentos cardíacos estão abaixo do intervalo normal!",
             text: "Something went wrong!",
           });
-        } else if (bpm > 1000) {
+        } else if (bpm > HIGH_BPM) {
           Swal.fire({
             icon: "error",
             title: "Batimentos cardíacos estão acima do intervalo normal!",

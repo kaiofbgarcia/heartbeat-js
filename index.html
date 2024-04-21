@@ -8,14 +8,54 @@
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <style>
+      .webcam-container {
+        width: 90%;
+        max-width: 640px;
+        height: 100%;
+        max-height: 480px;
+        margin-bottom: 2rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .webcam-video {
+        width: 100%; /* Ajustado para ocupar 100% do espaço disponível */
+        height: auto; /* Mantém a proporção da imagem */
+      }
+
+      @media (max-width: 639px) {
+        .webcam-container.md {
+          width: 80%;
+          max-width: 440px;
+          height: 80%;
+          max-height: 280px;
+        }
+      }
+
+      @media (max-width: 439px) {
+        .webcam-container.sm {
+          width: 60%;
+          max-width: 320px;
+          height: 60%;
+          max-height: 240px;
+        }
+      }
+    </style>
   </head>
-  <body>
-    <div class="container">
-      <h1 class="title">Baby Monitor</h1>
-      <p class="subtitle">Veja como está o seu bebê</p>
+  <body class="bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400">
+    <!-- Container -->
+    <div
+      class="flex flex-col justify-center items-center h-screen text-white text-center mx-auto"
+    >
+      <!-- Title -->
+      <h1 class="text-3xl font-bold text-shadow mt-4">Baby Monitor</h1>
+      <!-- Subtitle -->
+      <p class="text-lg mb-4 text-shadow">Veja como está o seu bebê</p>
       <!-- WEBCAM -->
-      <div class="webcam-container">
+      <div class="webcam-container md:md sm:sm">
         <video
           hidden
           class="webcam-video"
@@ -23,7 +63,7 @@
           width="640"
           height="480"
         ></video>
-        <canvas id="canvas" width="640" height="480"></canvas>
+        <canvas id="canvas"></canvas>
       </div>
       <!-- HeartBeat -->
       <h2 class="subtitle">Batimentos Cardíacos</h2>
@@ -34,14 +74,20 @@
         </div>
       </div>
       <!-- BUTTONS -->
-      <div class="button-container">
-        <a href="cuidados.html">
-          <button id="dicas" class="button bg-blue-500 hover:bg-blue-700">
-            Dicas de Cuidado
-          </button>
-        </a>
-        <button id="notificacao" class="button bg-blue-500 hover:bg-blue-700">
-          Ver Histórico de Notificação
+      <!-- Button Container -->
+      <div class="flex flex-col gap-4 justify-center mt-8">
+        <button
+          id="dicas"
+          class="px-8 py-3 text-base font-bold text-white bg-blue-700 rounded-lg focus:outline-none hover:bg-blue-600 transition duration-300 ease-in-out"
+          onclick="window.location.href = 'cuidados.html';"
+        >
+          Dicas de Cuidado
+        </button>
+        <button
+          id="notificacao"
+          class="px-8 py-3 text-base font-bold text-white bg-blue-700 rounded-lg focus:outline-none hover:bg-blue-600 transition duration-300 ease-in-out"
+        >
+          Ver Histórico de Medições
         </button>
       </div>
       <script type="module" src="index.js"></script>
