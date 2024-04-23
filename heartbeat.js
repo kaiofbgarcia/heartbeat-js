@@ -9,6 +9,8 @@ const MAX_CORNERS = 10;
 const MIN_CORNERS = 5;
 const QUALITY_LEVEL = 0.01;
 const MIN_DISTANCE = 10;
+// Definindo variável para controlar o cooldown
+let alertCooldown = false;
 
 // Simple rPPG implementation in JavaScript
 // - Code could be improved given better documentation available for opencv.js
@@ -408,23 +410,37 @@ export class Heartbeat {
         bandMask.delete();
         // Infer BPM
         let bpm = ((result.maxLoc.y * fps) / signal.rows) * SEC_PER_MIN;
-        console.log(bpm);
-        //Verificação se o batimento está fora do intervalo normal
-        if (bpm < - LOW_BPM ) {
+        // console.log(bpm);
+
+        // Verificação se o batimento está fora do intervalo normal
+        if (bpm < LOW_BPM && !alertCooldown) {
           Swal.fire({
             icon: "error",
-            title: "Batimentos cardíacos estão abaixo do intervalo normal!",
-            text: "Something went wrong!",
+            title: "Alguma coisa está errada!",
+            text: "Batimentos cardíacos estão abaixo do intervalo normal!",
           });
-        } else if (bpm > HIGH_BPM) {
+          // Ativar o cooldown
+          alertCooldown = true;
+          // Configurar o temporizador para redefinir o cooldown após 30 segundos
+          setTimeout(() => {
+            alertCooldown = false;
+          }, 10000); // 30 segundos em milissegundos
+        } else if (bpm > HIGH_BPM && !alertCooldown) {
           Swal.fire({
             icon: "error",
-            title: "Batimentos cardíacos estão acima do intervalo normal!",
-            text: "Something went wrong!",
+            title: "Alguma coisa está errada!",
+            text: "Batimentos cardíacos estão acima do intervalo normal!",
           });
+          // Ativar o cooldown
+          alertCooldown = true;
+          // Configurar o temporizador para redefinir o cooldown após 30 segundos
+          setTimeout(() => {
+            alertCooldown = false;
+          }, 10000); // 30 segundos em milissegundos
         }
         // Draw BPM
-        document.querySelector("#heartbeat-value").textContent = Math.round(bpm);
+        document.querySelector("#heartbeat-value").textContent =
+          Math.round(bpm);
         this.drawBPM(bpm);
       }
       signal.delete();
@@ -432,6 +448,34 @@ export class Heartbeat {
       console.log("signal too small");
     }
   }
+
+  // calculateAverage() {
+  //   // Verifique se há medidas suficientes
+  //   if (this.timestamps.length < 2) {
+  //     console.log("Not enough timestamps to calculate average.");
+  //     return;
+  //   }
+
+  //   // Calcule o tempo total de execução em segundos
+  //   const totalTime = (this.timestamps[this.timestamps.length - 1] - this.timestamps[0]) / 1000;
+
+  //   // Calcule o número de medidas durante o tempo de execução
+  //   const numMeasurements = this.timestamps.length;
+
+  //   // Some todas as medidas
+  //   let sum = 0;
+  //   for (let i = 0; i < numMeasurements; i++) {
+  //     sum += this.signal[i][0]; // Suponha que estamos somando apenas o primeiro valor de cada medida RGB
+  //   }
+
+  //   // Calcule a média
+  //   const average = sum / numMeasurements;
+
+  //   // Imprima a média e o número de medidas
+  //   console.log("Total measurements during runtime:", numMeasurements);
+  //   console.log("Average value during runtime:", average);
+  // }
+
   // Calculate fps from timestamps
   getFps(timestamps, timeBase = 1000) {
     if (Array.isArray(timestamps) && timestamps.length) {
