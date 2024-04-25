@@ -415,7 +415,7 @@ export class Heartbeat {
         // Verificação se o batimento está fora do intervalo normal
         if (bpm < LOW_BPM && !alertCooldown) {
           Swal.fire({
-            icon: "error",
+            icon: "warning",
             title: "Alguma coisa está errada!",
             text: "Batimentos cardíacos estão abaixo do intervalo normal!",
           });
@@ -427,7 +427,7 @@ export class Heartbeat {
           }, 10000); // 30 segundos em milissegundos
         } else if (bpm > HIGH_BPM && !alertCooldown) {
           Swal.fire({
-            icon: "error",
+            icon: "warning",
             title: "Alguma coisa está errada!",
             text: "Batimentos cardíacos estão acima do intervalo normal!",
           });
