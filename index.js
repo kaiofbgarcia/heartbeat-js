@@ -30,3 +30,22 @@ var ready = loadOpenCv(OPENCV_URI);
 ready.then(function() {
   demo.init();
 });
+
+
+
+
+
+
+// Seletor para o botão "Exibir Alerta"
+const btnExibirAlerta = document.getElementById('exibir-alerta');
+
+// Adiciona um evento de clique ao botão
+btnExibirAlerta.addEventListener('click', () => {
+  // Exibe o alerta usando Swal.fire()
+  Swal.fire({
+    icon: 'warning',
+    title: 'Alguma coisa está errada!',
+    text: 'Batimentos cardíacos estão acima do intervalo normal!'
+  });
+});
+
