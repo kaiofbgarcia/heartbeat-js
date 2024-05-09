@@ -1,7 +1,7 @@
 const RESCAN_INTERVAL = 1000;
 const DEFAULT_FPS = 30;
-const LOW_BPM = 999;
-const HIGH_BPM = 1000;
+const LOW_BPM = 42;
+const HIGH_BPM = 240;
 const REL_MIN_FACE_SIZE = 0.4;
 const SEC_PER_MIN = 60;
 const MSEC_PER_SEC = 1000;
@@ -412,32 +412,33 @@ export class Heartbeat {
         let bpm = ((result.maxLoc.y * fps) / signal.rows) * SEC_PER_MIN;
         // console.log(bpm);
 
+        //ALERTA DESABILITADO
         // Verificação se o batimento está fora do intervalo normal
-        if (bpm < LOW_BPM && !alertCooldown) {
-          Swal.fire({
-            icon: "warning",
-            title: "Alguma coisa está errada!",
-            text: "Batimentos cardíacos estão abaixo do intervalo normal!",
-          });
-          // Ativar o cooldown
-          alertCooldown = true;
-          // Configurar o temporizador para redefinir o cooldown após 30 segundos
-          setTimeout(() => {
-            alertCooldown = false;
-          }, 10000); // 30 segundos em milissegundos
-        } else if (bpm > HIGH_BPM && !alertCooldown) {
-          Swal.fire({
-            icon: "warning",
-            title: "Alguma coisa está errada!",
-            text: "Batimentos cardíacos estão acima do intervalo normal!",
-          });
-          // Ativar o cooldown
-          alertCooldown = true;
-          // Configurar o temporizador para redefinir o cooldown após 30 segundos
-          setTimeout(() => {
-            alertCooldown = false;
-          }, 10000); // 30 segundos em milissegundos
-        }
+        // if (bpm < LOW_BPM && !alertCooldown) {
+        //   Swal.fire({
+        //     icon: "warning",
+        //     title: "Alguma coisa está errada!",
+        //     text: "Batimentos cardíacos estão abaixo do intervalo normal!",
+        //   });
+        //   // Ativar o cooldown
+        //   alertCooldown = true;
+        //   // Configurar o temporizador para redefinir o cooldown após 30 segundos
+        //   setTimeout(() => {
+        //     alertCooldown = false;
+        //   }, 10000); // 30 segundos em milissegundos
+        // } else if (bpm > HIGH_BPM && !alertCooldown) {
+        //   Swal.fire({
+        //     icon: "warning",
+        //     title: "Alguma coisa está errada!",
+        //     text: "Batimentos cardíacos estão acima do intervalo normal!",
+        //   });
+        //   // Ativar o cooldown
+        //   alertCooldown = true;
+        //   // Configurar o temporizador para redefinir o cooldown após 30 segundos
+        //   setTimeout(() => {
+        //     alertCooldown = false;
+        //   }, 10000); // 30 segundos em milissegundos
+        // }
         // Draw BPM
         document.querySelector("#heartbeat-value").textContent =
           Math.round(bpm);
