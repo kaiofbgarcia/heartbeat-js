@@ -1,6 +1,6 @@
 const RESCAN_INTERVAL = 1000;
 const DEFAULT_FPS = 30;
-const LOW_BPM = 42;
+const LOW_BPM = 32;
 const HIGH_BPM = 240;
 const REL_MIN_FACE_SIZE = 0.4;
 const SEC_PER_MIN = 60;
@@ -9,7 +9,7 @@ const MAX_CORNERS = 10;
 const MIN_CORNERS = 5;
 const QUALITY_LEVEL = 0.01;
 const MIN_DISTANCE = 10;
-// Definindo variável para controlar o cooldown
+// Variável para controlar o cooldown
 let alertCooldown = false;
 
 // Simple rPPG implementation in JavaScript

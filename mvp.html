@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heartbeat - Baby Monitor</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+        }
+
+        .header a:hover {
+            font-weight: bold;
+        }
+
+        .title {
+            color: #343a40;
+        }
+
+        .subtitle {
+            color: #6c757d;
+        }
+
+        .button-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .button-primary:hover {
+            opacity: 0.9;
+            background-color: #005dc0;
+        }
+
+        .button-alert {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .button-alert:hover {
+            background-color: #a51f2d;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+
+        .webcam-container {
+            max-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        video,
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header nav {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .header nav a {
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header flex justify-between items-center">
+        <a href="index.html" class="text-lg font-semibold subtitle mx-4">
+            <h1 class="text-3xl font-bold title">Baby Smartcare</h1>
+        </a>
+        <nav>
+            <a href="index.html" class="text-lg font-semibold subtitle mx-4">Início</a>
+            <a href="cuidados.html" class="text-lg font-semibold subtitle mx-4">Cuidados com o Bebê</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex flex-col items-center justify-center min-h-screen py-12">
+        <div class="text-center">
+            <h2 class="text-4xl font-bold title mb-4">Heartbeat Monitor</h2>
+            <p class="text-lg subtitle mb-8">Veja como está o seu bebê em tempo real</p>
+        </div>
+        <div class="webcam-container">
+            <video hidden class="webcam-video" id="webcam" width="640" height="480"></video>
+            <canvas id="canvas"></canvas>
+        </div>
+        <h3 class="text-2xl font-semibold title mt-8 mb-4">Batimentos Cardíacos</h3>
+        <div class="heartbeat-container text-center mb-8">
+            <div class="text-4xl font-bold" id="heartbeat-value">0</div>
+            <div class="text-lg subtitle">bpm</div>
+        </div>
+        <div class="flex flex-col gap-4">
+            <button id="emergencia" class="px-8 py-3 text-base font-bold rounded-lg button-alert">Contato de Emergencia</button>
+            <button id="dicas" class="px-8 py-3 text-base font-bold rounded-lg button-primary" onclick="window.location.href = 'cuidados.html';">Dicas de Cuidado</button>
+        </div>
+    </main>
+
+    <!-- Histórico Modal -->
+    <div id="historyModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" onclick="closeModal()">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <canvas id="historyChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto">
+        &copy; 2024 Baby Smartcare. Todos os direitos reservados.
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function showHistory() {
+            const ctx = document.getElementById("historyChart").getContext("2d");
+            const historyChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: historicalData.timestamps,
+                    datasets: [
+                        {
+                            label: "Batimentos Cardíacos (BPM)",
+                            data: historicalData.bpm,
+                            borderColor: "rgba(75, 192, 192, 1)",
+                            borderWidth: 1,
+                        },
+                    ],
+                },
+                options: {
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: "Tempo",
+                            },
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: "BPM",
+                            },
+                        },
+                    },
+                },
+            });
+            document.getElementById("historyModal").classList.add("active");
+        }
+
+        function closeModal() {
+            document.getElementById("historyModal").classList.remove("active");
+        }
+    </script>
+</body>
+</html>

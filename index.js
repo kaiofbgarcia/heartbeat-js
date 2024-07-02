@@ -31,21 +31,19 @@ ready.then(function() {
   demo.init();
 });
 
-
-
-
-
-
-// Seletor para o botão "Exibir Alerta"
-const btnExibirAlerta = document.getElementById('exibir-alerta');
+// Seletor para o botão "Emergencia"
+const btnExibirAlerta = document.getElementById('emergencia');
 
 // Adiciona um evento de clique ao botão
 btnExibirAlerta.addEventListener('click', () => {
   // Exibe o alerta usando Swal.fire()
   Swal.fire({
     icon: 'warning',
-    title: 'Alguma coisa está errada!',
-    text: 'Batimentos cardíacos estão acima do intervalo normal!'
+    title: 'Contato da Emergencia',
+    html: `Em casos de emergencia ligue: <br/> <br/> 
+      <Strong>SAMU</Strong> pelo número <Strong>192</Strong> <br/> <br/> 
+      <Strong>Bombeiros</Strong> pelo número <Strong>193</Strong> 
+    `,
   });
 });
 

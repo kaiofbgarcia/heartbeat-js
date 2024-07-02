@@ -3,21 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Heartbeat - Baby Monitor</title>
+    <title>Home - Heartbeat JS</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
     />
     <style>
       body {
         font-family: "Inter", sans-serif;
         background-color: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
 
       .header {
         background-color: #ffffff;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         padding: 1rem 2rem;
+      }
+
+      .header a:hover {
+        font-weight: bold;
       }
 
       .title {
@@ -28,23 +35,12 @@
         color: #6c757d;
       }
 
-      .button-primary {
-        background-color: #007bff;
-        color: white;
-      }
-
-      .button-secondary {
-        background-color: #6c757d;
-        color: white;
-      }
-
-      .button-alert {
-        background-color: #dc3545;
-        color: white;
-      }
-
-      .button:hover {
-        opacity: 0.9;
+      .content {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        flex: 1;
       }
 
       .footer {
@@ -52,128 +48,136 @@
         color: white;
         padding: 1rem 2rem;
         text-align: center;
+        margin-top: auto;
       }
 
-      #historyModal {
-        display: none;
+      .button-primary {
+        background-color: #007bff;
+        color: white;
+        border-radius: 8px;
+        font-weight: bold;
       }
 
-      #historyModal.active {
+      .button-primary:hover {
+        opacity: 0.9;
+        background-color: #005dc0;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .column {
+        flex: 1;
+        padding: 1rem;
+      }
+
+      .column1 {
+        flex: 2;
+      }
+
+      .column2 {
+        flex: 1;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
         display: block;
+        margin: 0 auto;
+      }
+
+      button {
+        padding: 0.5rem 1rem;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-top: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        .row {
+          flex-direction: column;
+        }
+
+        .column1,
+        .column2 {
+          flex: 1;
+          max-width: 100%;
+        }
+        .header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .header nav {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .header nav a {
+          margin-top: 0.5rem;
+        }
       }
     </style>
   </head>
   <body>
     <!-- Header -->
     <header class="header flex justify-between items-center">
-      <h1 class="text-3xl font-bold title">Baby Smartcare</h1>
+      <a href="index.html" class="text-lg font-semibold subtitle mx-4"
+        ><h1 class="text-3xl font-bold title">Baby Smartcare</h1></a
+      >
       <nav>
-        <a href="index.html" class="text-lg font-semibold subtitle mx-4">Home</a>
-        <a href="cuidados.html" class="text-lg font-semibold subtitle mx-4">Cuidados</a>
+        <a href="mvp.html" class="text-lg font-semibold subtitle mx-4"
+          >Monitor de Frequência</a
+        >
+        <a href="cuidados.html" class="text-lg font-semibold subtitle mx-4"
+          >Cuidados com o Bebê</a
+        >
       </nav>
     </header>
 
     <!-- Main Content -->
-    <main class="flex flex-col items-center justify-center min-h-screen py-12">
-      <div class="text-center">
-        <h2 class="text-4xl font-bold title mb-4">Heartbeat Monitor</h2>
-        <p class="text-lg subtitle mb-8">
-          Veja como está o seu bebê em tempo real
-        </p>
-      </div>
-      <div class="webcam-container">
-        <video
-          hidden
-          class="webcam-video"
-          id="webcam"
-          width="640"
-          height="480"
-        ></video>
-        <canvas id="canvas"></canvas>
-      </div>
-      <h3 class="text-2xl font-semibold title mt-8 mb-4">Batimentos Cardíacos</h3>
-      <div class="heartbeat-container text-center mb-8">
-        <div class="text-4xl font-bold" id="heartbeat-value">0</div>
-        <div class="text-lg subtitle">bpm</div>
-      </div>
-      <div class="flex flex-col gap-4">
-        <button
-          id="dicas"
-          class="px-8 py-3 text-base font-bold rounded-lg button-primary"
-          onclick="window.location.href = 'cuidados.html';"
-        >
-          Dicas de Cuidado
-        </button>
-        <button
-          id="notificacao"
-          class="px-8 py-3 text-base font-bold rounded-lg button-secondary"
-          onclick="showHistory()"
-        >
-          Ver Histórico de Medições
-        </button>
-        <button
-          id="exibir-alerta"
-          class="px-8 py-3 text-base font-bold rounded-lg button-alert"
-        >
-          Exibir Alerta
-        </button>
+    <main class="container flex-1">
+      <div class="row content mt-8">
+        <div class="column column1">
+          <h1 class="text-4xl font-bold title mb-4">
+            Bem-vindo ao Baby Smartcare
+          </h1>
+          <p class="text-lg subtitle mb-8 text-justify">
+            O nosso protótipo é uma implementação em JavaScript da
+            fotopletismografia remota (rPPG) para medir a frequência cardíaca
+            usando vídeo facial. Este projeto detecta e rastreia o rosto para
+            analisar as mudanças de cor da pele e estimar a frequência cardíaca
+            através da análise de frequência.
+          </p>
+          <button
+            class="button-primary"
+            onclick="window.location.href='mvp.html'"
+          >
+            Ver MVP
+          </button>
+        </div>
+        <div class="column column2">
+          <img
+            src="./img/mulher-segurando-um-bebe-recem-nascido-ilustracao-em-vetor-conceito-em-estilo-bonito-dos-desenhos-animados-saude-cuidados-maternidade_169343-1157.avif"
+            alt="Ilustração do Projeto"
+          />
+        </div>
       </div>
     </main>
 
-    <!-- Histórico Modal -->
-    <div id="historyModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" onclick="closeModal()">
-      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <canvas id="historyChart"></canvas>
-      </div>
-    </div>
-
     <!-- Footer -->
-    <footer class="footer mt-auto">
-      &copy; 2024 Heartbeat. Todos os direitos reservados.
+    <footer class="footer">
+      <p>&copy; 2024 Baby Smartcare. Todos os direitos reservados.</p>
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="module" src="index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      function showHistory() {
-        const ctx = document.getElementById('historyChart').getContext('2d');
-        const historyChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: historicalData.timestamps,
-            datasets: [{
-              label: 'Batimentos Cardíacos (BPM)',
-              data: historicalData.bpm,
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              x: {
-                display: true,
-                title: {
-                  display: true,
-                  text: 'Tempo'
-                }
-              },
-              y: {
-                display: true,
-                title: {
-                  display: true,
-                  text: 'BPM'
-                }
-              }
-            }
-          }
-        });
-        document.getElementById('historyModal').classList.add('active');
-      }
-
-      function closeModal() {
-        document.getElementById('historyModal').classList.remove('active');
-      }
-    </script>
   </body>
 </html>
